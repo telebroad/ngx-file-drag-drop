@@ -1,0 +1,3 @@
+<div class="filename" *ngFor="let fileName of selectedFilenames">{{fileName}}</div>
+<div class="filename no-file" *ngIf="!selectedFilenames.length">{{emptyPlaceholder}}</div>
+<input #fileInputEl class="hidden" #fileInput type="file" [attr.multiple]="multiple? '' : null" [attr.accept]="accept">

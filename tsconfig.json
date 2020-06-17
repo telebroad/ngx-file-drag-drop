@@ -14,7 +14,13 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-file-drag-drop": [
+        "dist/ngx-file-drag-drop/ngx-file-drag-drop",
+        "dist/ngx-file-drag-drop"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

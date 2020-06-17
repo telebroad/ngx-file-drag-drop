@@ -1,0 +1,35 @@
+input {
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+:host {
+  display: block;
+  border: 2px dashed #ccc;
+  border-radius: 20px;
+  min-height: 150px;
+  margin: 10px auto;
+  max-width: 500px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  /* margin: 10px; */
+}
+:host.highlight {
+  border-color: purple;
+}
+.filename {
+  /* text-align: center; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.no-file {
+  align-self: center;
+}
