@@ -1,4 +1,4 @@
-import { Component, forwardRef, HostBinding, HostListener, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, forwardRef, HostBinding, HostListener, ViewChild, Input, ElementRef, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
@@ -14,6 +14,8 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   constructor() { }
+
+
 
   @ViewChild('fileInputEl')
   fileInputEl: ElementRef;
@@ -59,10 +61,11 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   }
 
   private _onChange = (val: File[]) => { };
-  private _onTouched = () => { };
+  private _onTouched = () => { console.log('blured') };
   private _isDragOver = false;
   writeValue(files: File[]): void {
     if (!this.disabled) {
+
       this._files = files;
       this._onChange(this._files);
     }
@@ -79,19 +82,23 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   }
 
   addFiles(files: File[] | FileList | File) {
+    if (!this.disabled) {
+      this._onTouched();
 
-    const fileArray = this.convertToArray(files);
+      const fileArray = this.convertToArray(files);
 
-    if (this.multiple) {
-      this.errorOnEqualFilenames(fileArray);
-      const merged = this.files.concat(fileArray);
-      this.writeValue(merged);
+      if (this.multiple) {
+        this.errorOnEqualFilenames(fileArray);
+        const merged = this.files.concat(fileArray);
+        this.writeValue(merged);
+      }
+      else if (fileArray.length <= 1) {
+        this.writeValue(fileArray)
+      } else {
+        throw Error('Multiple files not allowed')
+      }
     }
-    else if (fileArray.length <= 1) {
-      this.writeValue(fileArray)
-    } else {
-      throw Error('Multiple files not allowed')
-    }
+
   }
 
 
@@ -116,10 +123,15 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   @HostListener('change', ['$event'])
   change(event: Event) {
+    console.log('change')
+
     const fileList: FileList = (<HTMLInputElement>event.target).files
     if (fileList?.length) {
       this.addFiles(fileList);
+
+
     }
+
   }
 
   @HostListener('dragenter', ['$event'])
@@ -137,6 +149,8 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   @HostListener('drop', ['$event'])
   handleDrop(e) {
+
+
     this.deactivate(e);
     const fileList = e.dataTransfer.files;
 
@@ -144,22 +158,27 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     this.removeDirectories(fileList).then((files: File[]) => {
       if (files?.length) {
         this.addFiles(files);
+        this.fileInputEl.nativeElement.f
       }
+      else if (!this.disabled) this._onTouched();
     })
   }
 
   @HostListener('click')
   open() {
     if (!this.disabled) {
+      this._onTouched();
       this.fileInputEl?.nativeElement.click();
     }
   }
 
-  @HostListener('focusout')
-  blur() {
-    console.log('blurred')
-    this._onTouched();
-  }
+
+
+  // @HostListener('focusout')
+  // blur() {
+  //   console.log('blurred')
+  //   this._onTouched();
+  // }
 
   private errorOnEqualFilenames(files: File[]) {
     if (this.files.some(file => files.some(file2 => file.name === file2.name))) {
