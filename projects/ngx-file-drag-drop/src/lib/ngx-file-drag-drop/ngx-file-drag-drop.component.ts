@@ -124,12 +124,11 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     const fileList = e.dataTransfer.files;
 
 
-    this.removeDirectories(fileList, (files) => {
-      console.log(files)
+    this.removeDirectories(fileList).then((files: File[]) => {
       if (files?.length) {
         this.addFiles(files);
       }
-    });
+    })
   }
 
   @HostListener('click')
@@ -157,52 +156,40 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     }
   }
 
-  private removeDirectories(files: FileList, filteredArrayProcessor: (files: File[]) => void) {
+  private removeDirectories(files: FileList) {
 
-    const fileArray = this.convertToArray(files);
+    return new Promise((resolve, reject) => {
 
+      const fileArray = this.convertToArray(files);
 
-    const dirnames = [];
+      const dirnames = [];
 
-    // for (let i = 0; i < fileArray.length; i++) {
+      const readerList = [];
 
-    //   reader.onerror = ((file: File) => {
-    //     return function () {
-    //       dirnames.push(file.name)
-    //     };
-    //   })(fileArray[i]);
+      for (let i = 0; i < fileArray.length; i++) {
 
-    //   reader.readAsArrayBuffer(fileArray[i]);
+        const reader = new FileReader();
 
-    //   if (i === fileArray.length - 1) {
-    //     reader.onloadend = () => { console.log(dirnames); return filteredArrayProcessor(fileArray.filter((file: File) => !dirnames.includes(file.name))) }
-    //   }
-    // }
+        reader.onerror = function () {
+          dirnames.push(fileArray[i].name)
+        };
 
+        reader.onloadend = () => addToReaderList(i);
 
-
-    const readerList = [];
-
-    for (let i = 0; i < fileArray.length; i++) {
-
-      const reader = new FileReader();
-
-      reader.onerror = function () {
-        dirnames.push(fileArray[i].name)
-      };
-
-      reader.onloadend = () => addToReaderList(i);
-
-      reader.readAsArrayBuffer(fileArray[i]);
-    }
-
-    function addToReaderList(val: number) {
-      readerList.push(val);
-      if (readerList.length === fileArray.length) {
-        filteredArrayProcessor(fileArray.filter((file: File) => !dirnames.includes(file.name)));
+        reader.readAsArrayBuffer(fileArray[i]);
       }
 
-    }
+      function addToReaderList(val: number) {
+        readerList.push(val);
+        if (readerList.length === fileArray.length) {
+          resolve(fileArray.filter((file: File) => !dirnames.includes(file.name)));
+        }
+
+      }
+
+    });
+
+
   }
 
 
