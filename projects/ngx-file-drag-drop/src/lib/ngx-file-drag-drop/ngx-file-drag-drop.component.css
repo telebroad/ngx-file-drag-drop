@@ -24,6 +24,9 @@ input {
 :host.highlight {
   border-color: purple;
 }
+:host.disabled{
+  opacity: 0.5;
+}
 .filename {
   /* text-align: center; */
   overflow: hidden;
