@@ -13,14 +13,26 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 })
 export class NgxFileDragDropComponent implements ControlValueAccessor {
 
-  constructor(private _elementRef: ElementRef) { }
+  constructor() { }
 
   @ViewChild('fileInputEl')
   fileInputEl: ElementRef;
 
   @Input() emptyPlaceholder = 'Drop file or click to select';
 
-  @Input() accept;
+  @Input() accept: string;
+
+  private _disabled = false;
+  @HostBinding('class.disabled')
+  @Input()
+  get
+    disabled() {
+    return this._disabled;
+  }
+  set
+    disabled(val: boolean) {
+    this._disabled = coerceBooleanProperty(val);
+  }
 
   _multiple: boolean = true;
   @Input()
@@ -50,8 +62,11 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   private _onTouched = () => { };
   private _isDragOver = false;
   writeValue(files: File[]): void {
-    this._files = files;
-    this._onChange(this._files);
+    if (!this.disabled) {
+      this._files = files;
+      this._onChange(this._files);
+    }
+
   }
   registerOnChange(fn: any): void {
     this._onChange = fn;
@@ -60,7 +75,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     this._onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
-    this._elementRef.nativeElement = isDisabled;
+    this.disabled = isDisabled;
   }
 
   addFiles(files: File[] | FileList | File) {
@@ -94,7 +109,9 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     return this._isDragOver
   }
   set isActive(value: boolean) {
-    this._isDragOver = value
+    if (!this.disabled) {
+      this._isDragOver = value
+    }
   }
 
   @HostListener('change', ['$event'])
@@ -109,13 +126,13 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   @HostListener('dragover', ['$event'])
   activate(e) {
     e.preventDefault();
-    this._isDragOver = true;
+    this.isActive = true;
   }
 
   @HostListener('dragleave', ['$event'])
   deactivate(e) {
     e.preventDefault();
-    this._isDragOver = false;
+    this.isActive = false;
   }
 
   @HostListener('drop', ['$event'])
@@ -133,7 +150,9 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   @HostListener('click')
   open() {
-    this.fileInputEl?.nativeElement.click();
+    if (!this.disabled) {
+      this.fileInputEl?.nativeElement.click();
+    }
   }
 
   @HostListener('focusout')
