@@ -88,7 +88,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
       const fileArray = this.convertToArray(files);
 
       if (this.multiple) {
-        this.errorOnEqualFilenames(fileArray);
+        //this.errorOnEqualFilenames(fileArray);
         const merged = this.files.concat(fileArray);
         this.writeValue(merged);
       }
@@ -102,8 +102,11 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   }
 
 
-  removeFile(filename: string) {
-    this.writeValue(this.files.filter(file => file.name !== filename));
+  removeFile(file: File) {
+    const fileIndex = this.files.indexOf(file);
+    if (fileIndex >= 0) {
+      this.files = this.files.splice(fileIndex, 1);
+    }
   }
 
   clear() {
@@ -180,19 +183,19 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   //   this._onTouched();
   // }
 
-  private errorOnEqualFilenames(files: File[]) {
-    if (this.files.some(file => files.some(file2 => file.name === file2.name))) {
-      throw Error('one of the provided filenames already exists')
-    }
+  // private errorOnEqualFilenames(files: File[]) {
+  //   if (this.files.some(file => files.some(file2 => file.name === file2.name))) {
+  //     throw Error('one of the provided filenames already exists')
+  //   }
 
-    for (let i = 0; i < files.length; i++) {
-      for (let j = i + 1; j < files.length; j++) {
-        if (files[i].name === files[j].name) {
-          throw Error(`can't add multiple files with same name`)
-        }
-      }
-    }
-  }
+  //   for (let i = 0; i < files.length; i++) {
+  //     for (let j = i + 1; j < files.length; j++) {
+  //       if (files[i].name === files[j].name) {
+  //         throw Error(`can't add multiple files with same name`)
+  //       }
+  //     }
+  //   }
+  // }
 
   private removeDirectories(files: FileList) {
 
