@@ -15,24 +15,33 @@ input {
   margin: 10px auto;
   max-width: 500px;
   padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  /* margin: 10px; */
 }
 :host.highlight {
   border-color: purple;
 }
-:host.disabled{
+:host.disabled {
   opacity: 0.5;
 }
-.filename {
-  /* text-align: center; */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+mat-chip {
+  max-width: 100%;
 }
+/* span{
+  display: inline-block;
+  width: 100%;
+  text-overflow: ellipsis;
+} */
 .no-file {
-  align-self: center;
+  text-align: center;
+  line-height: 150px;
+  height: 150px;
+}
+
+.mat-chip.mat-standard-chip.mat-focus-indicator {
+  /* transition: none !important; */
+  box-shadow: none;
+}
+
+.mat-chip.mat-standard-chip::after {
+  background: unset;
 }

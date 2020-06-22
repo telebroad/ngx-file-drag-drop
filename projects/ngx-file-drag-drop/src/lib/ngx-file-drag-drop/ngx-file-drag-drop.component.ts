@@ -56,9 +56,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     this.addFiles(files);
   }
 
-  get selectedFilenames() {
-    return this.files.map(file => file.name);
-  }
+
 
   private _onChange = (val: File[]) => { };
   private _onTouched = () => { console.log('blured') };
@@ -97,6 +95,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
       } else {
         throw Error('Multiple files not allowed')
       }
+      console.log(this.files.length)
     }
 
   }
@@ -105,7 +104,9 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   removeFile(file: File) {
     const fileIndex = this.files.indexOf(file);
     if (fileIndex >= 0) {
-      this.files = this.files.splice(fileIndex, 1);
+      const currentFiles = this.files.slice();
+      currentFiles.splice(fileIndex, 1);
+      this.writeValue(currentFiles);
     }
   }
 
