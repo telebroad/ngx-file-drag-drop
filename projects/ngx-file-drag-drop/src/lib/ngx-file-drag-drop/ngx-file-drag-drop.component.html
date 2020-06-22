@@ -1,3 +1,11 @@
-<div class="filename" *ngFor="let fileName of selectedFilenames">{{fileName}}</div>
-<div class="filename no-file" *ngIf="!selectedFilenames.length">{{emptyPlaceholder}}</div>
+<mat-chip-list selectable="false">
+    <mat-chip *ngFor="let file of files" [disabled]="disabled" color="accent" disableRipple selected
+        [removable]="!disabled" (removed)="removeFile(file)">
+        <span>{{file.name}}</span>
+
+        <mat-icon *ngIf="!disabled" matChipRemove>cancel</mat-icon>
+    </mat-chip>
+
+</mat-chip-list>
+<div class="no-file" *ngIf="!files.length">{{emptyPlaceholder}}</div>
 <input #fileInputEl class="hidden" #fileInput type="file" [attr.multiple]="multiple? '' : null" [attr.accept]="accept">
