@@ -22,6 +22,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   @Input() emptyPlaceholder = 'Drop file or click to select';
 
+  // does no validation, just sets the hidden file input
   @Input() accept: string;
 
   private _disabled = false;
@@ -51,13 +52,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     return this._files
   }
 
-  set
-    files(files: File[]) {
-    this.addFiles(files);
-  }
-
-
-
+  // https://angular.io/api/forms/ControlValueAccessor
   private _onChange = (val: File[]) => { };
   private _onTouched = () => { console.log('blured') };
   private _isDragOver = false;
@@ -95,7 +90,6 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
       } else {
         throw Error('Multiple files not allowed')
       }
-      console.log(this.files.length)
     }
 
   }
@@ -113,7 +107,12 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   clear() {
     this.writeValue([]);
   }
-
+  
+  @HostBinding('class.empty-input')
+  get isEmpty() {
+    return !this.files?.length
+  }
+  
 
   @HostBinding('class.highlight')
   get isActive() {
@@ -127,15 +126,13 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   @HostListener('change', ['$event'])
   change(event: Event) {
-    console.log('change')
-
+    this._onTouched();
     const fileList: FileList = (<HTMLInputElement>event.target).files
     if (fileList?.length) {
       this.addFiles(fileList);
-
-
     }
-
+    //clear it so change is triggered if same file is selected again
+    (<HTMLInputElement>event.target).value = '';
   }
 
   @HostListener('dragenter', ['$event'])
@@ -171,7 +168,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   @HostListener('click')
   open() {
     if (!this.disabled) {
-      this._onTouched();
+
       this.fileInputEl?.nativeElement.click();
     }
   }

@@ -23,6 +23,11 @@ input {
   opacity: 0.5;
 }
 
+.placeholder{
+  opacity: 0.9;
+  color: grey;
+}
+
 mat-chip {
   max-width: 100%;
 }
@@ -31,10 +36,11 @@ mat-chip {
   width: 100%;
   text-overflow: ellipsis;
 } */
-.no-file {
-  text-align: center;
-  line-height: 150px;
-  height: 150px;
+
+:host.empty-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mat-chip.mat-standard-chip.mat-focus-indicator {
