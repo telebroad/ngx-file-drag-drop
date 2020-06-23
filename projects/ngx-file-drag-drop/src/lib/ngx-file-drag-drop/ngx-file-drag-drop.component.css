@@ -23,7 +23,7 @@ input {
   opacity: 0.5;
 }
 
-.placeholder{
+.placeholder {
   /* opacity: 0.9; */
   color: grey;
 }
@@ -31,11 +31,14 @@ input {
 mat-chip {
   max-width: 100%;
 }
-/* span{
-  display: inline-block;
-  width: 100%;
+.filename {
+  max-width: calc(100% - 1em);
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
-} */
+  direction: rtl;
+  /* text-align: left; */
+}
 
 :host.empty-input {
   display: flex;
