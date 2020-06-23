@@ -16,7 +16,7 @@ input {
   max-width: 500px;
   padding: 20px;
 }
-:host.highlight {
+:host.drag-over {
   border-color: purple;
 }
 :host.disabled {
@@ -24,7 +24,7 @@ input {
 }
 
 .placeholder{
-  opacity: 0.9;
+  /* opacity: 0.9; */
   color: grey;
 }
 

@@ -1,4 +1,4 @@
-import { Component, forwardRef, HostBinding, HostListener, ViewChild, Input, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, forwardRef, HostBinding, HostListener, ViewChild, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
@@ -15,12 +15,13 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   constructor() { }
 
+  @Output()
+  private valueChanged = new EventEmitter<File[]>();
 
 
   @ViewChild('fileInputEl')
-  fileInputEl: ElementRef;
+  private fileInputEl: ElementRef;
 
-  @Input() emptyPlaceholder = 'Drop file or click to select';
 
   // does no validation, just sets the hidden file input
   @Input() accept: string;
@@ -46,6 +47,9 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     return this._multiple;
   }
 
+  @Input() emptyPlaceholder = `Drop file${this.multiple ? 's' : ''} or click to select`;
+
+
   private _files: File[] = [];
   get
     files() {
@@ -56,12 +60,13 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   private _onChange = (val: File[]) => { };
   private _onTouched = () => { console.log('blured') };
   private _isDragOver = false;
-  writeValue(files: File[]): void {
-    if (!this.disabled) {
 
+  writeValue(files: File[]): void {
+    if (files.length < 2 || this.multiple) {
       this._files = files;
-      this._onChange(this._files);
+      this.emitChanges(this._files);
     }
+    else throw Error('Multiple files not allowed')
 
   }
   registerOnChange(fn: any): void {
@@ -74,23 +79,26 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
+  private emitChanges(files: File[]) {
+    this.valueChanged.emit(files);
+    this._onChange(files);
+  }
+
   addFiles(files: File[] | FileList | File) {
-    if (!this.disabled) {
-      this._onTouched();
 
-      const fileArray = this.convertToArray(files);
+    // this._onTouched();
 
-      if (this.multiple) {
-        //this.errorOnEqualFilenames(fileArray);
-        const merged = this.files.concat(fileArray);
-        this.writeValue(merged);
-      }
-      else if (fileArray.length <= 1) {
-        this.writeValue(fileArray)
-      } else {
-        throw Error('Multiple files not allowed')
-      }
+    const fileArray = this.convertToArray(files);
+
+    if (this.multiple) {
+      //this.errorOnEqualFilenames(fileArray);
+      const merged = this.files.concat(fileArray);
+      this.writeValue(merged);
     }
+    else {
+      this.writeValue(fileArray)
+    }
+
 
   }
 
@@ -107,25 +115,26 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   clear() {
     this.writeValue([]);
   }
-  
+
   @HostBinding('class.empty-input')
   get isEmpty() {
     return !this.files?.length
   }
-  
 
-  @HostBinding('class.highlight')
-  get isActive() {
+
+  @HostBinding('class.drag-over')
+  private get isDragover() {
     return this._isDragOver
   }
-  set isActive(value: boolean) {
+  private set isDragover(value: boolean) {
     if (!this.disabled) {
       this._isDragOver = value
     }
   }
 
   @HostListener('change', ['$event'])
-  change(event: Event) {
+  private change(event: Event) {
+    event.stopPropagation();
     this._onTouched();
     const fileList: FileList = (<HTMLInputElement>event.target).files
     if (fileList?.length) {
@@ -137,38 +146,35 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   @HostListener('dragenter', ['$event'])
   @HostListener('dragover', ['$event'])
-  activate(e) {
+  private activate(e) {
     e.preventDefault();
-    this.isActive = true;
+    this.isDragover = true;
   }
 
   @HostListener('dragleave', ['$event'])
-  deactivate(e) {
+  private deactivate(e) {
     e.preventDefault();
-    this.isActive = false;
+    this.isDragover = false;
   }
 
   @HostListener('drop', ['$event'])
-  handleDrop(e) {
-
-
+  private handleDrop(e) {
     this.deactivate(e);
-    const fileList = e.dataTransfer.files;
+    if (!this.disabled) {
 
-
-    this.removeDirectories(fileList).then((files: File[]) => {
-      if (files?.length) {
-        this.addFiles(files);
-        this.fileInputEl.nativeElement.f
-      }
-      else if (!this.disabled) this._onTouched();
-    })
+      const fileList = e.dataTransfer.files;
+      this.removeDirectories(fileList).then((files: File[]) => {
+        if (files?.length) {
+          this.addFiles(files);
+        }
+        this._onTouched();
+      })
+    }
   }
 
   @HostListener('click')
-  open() {
+  private open() {
     if (!this.disabled) {
-
       this.fileInputEl?.nativeElement.click();
     }
   }
