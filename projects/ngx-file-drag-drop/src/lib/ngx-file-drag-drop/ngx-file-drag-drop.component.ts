@@ -123,17 +123,17 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
 
   @HostBinding('class.drag-over')
-  private get isDragover() {
+  get isDragover() {
     return this._isDragOver
   }
-  private set isDragover(value: boolean) {
+  set isDragover(value: boolean) {
     if (!this.disabled) {
       this._isDragOver = value
     }
   }
 
   @HostListener('change', ['$event'])
-  private change(event: Event) {
+  change(event: Event) {
     event.stopPropagation();
     this._onTouched();
     const fileList: FileList = (<HTMLInputElement>event.target).files
@@ -146,19 +146,19 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   @HostListener('dragenter', ['$event'])
   @HostListener('dragover', ['$event'])
-  private activate(e) {
+  activate(e) {
     e.preventDefault();
     this.isDragover = true;
   }
 
   @HostListener('dragleave', ['$event'])
-  private deactivate(e) {
+  deactivate(e) {
     e.preventDefault();
     this.isDragover = false;
   }
 
   @HostListener('drop', ['$event'])
-  private handleDrop(e) {
+  handleDrop(e) {
     this.deactivate(e);
     if (!this.disabled) {
 
@@ -173,7 +173,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   }
 
   @HostListener('click')
-  private open() {
+  open() {
     if (!this.disabled) {
       this.fileInputEl?.nativeElement.click();
     }
