@@ -1,24 +1,47 @@
-# NgxFileDragDrop
+# ngx-file-drag-drop
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.11.
+## Install
 
-## Code scaffolding
+```
+npm i ngx-file-drag-drop
+```
 
-Run `ng generate component component-name --project ngx-file-drag-drop` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-file-drag-drop`.
-> Note: Don't forget to add `--project ngx-file-drag-drop` or else it will be added to the default project in your `angular.json` file. 
+## API reference
 
-## Build
+### MaterialFileInputModule
 
-Run `ng build ngx-file-drag-drop` to build the project. The build artifacts will be stored in the `dist/` directory.
+```ts
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
-## Publishing
+@NgModule({
+  imports: [
+    // the module for this lib
+    NgxFileDragDropDropModule
+  ]
+})
+```
 
-After building your library with `ng build ngx-file-drag-drop`, go to the dist folder `cd dist/ngx-file-drag-drop` and run `npm publish`.
+### NgxFileDragDropComponent
 
-## Running unit tests
+selector: `<ngx-file-drag-drop>`
 
-Run `ng test ngx-file-drag-drop` to execute the unit tests via [Karma](https://karma-runner.github.io).
+implements: [ControlValueAccessor](https://angular.io/api/forms/ControlValueAccessor) to work with angular forms
 
-## Further help
+**Additionnal properties**
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+| Name                                                   | Description                                                                                       |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| _@Output()_ valueChanged:`EventEmitter<File[]>`        | Event emitted when input value changes                                                            |
+| _@Input()_ emptyPlaceholder : `string`                 | Placeholder for empty input, default `Drop file or click to select`                               |
+| _@Input()_ multiple: `boolean`                         | Allows multiple file inputs, `false` by default                                                   |
+| _@Input()_ disabled: `boolean`                         | Disable the input.                                                                                |
+| _@Input()_ accept: `string`                            | Any value that `accept` file input attribute can get. Note that this does not validate the input. |
+| addFiles():`(files: File[] | FileList | File) => void` | Update input                                                                                      |
+| removeFile():`(file:File) => void`                     | Removes the file from the input                                                                   |
+| files: `File[]`                                        | Getter for form value                                                                             |
+| isEmpty: `boolean`                                     | Whether the input is empty (no files) or not                                                      |
+| clear(): `() => void`                                  | Removes all files from the input                                                                  |
+
+# Kudos to
+
+* https://github.com/merlosy/ngx-material-file-input
