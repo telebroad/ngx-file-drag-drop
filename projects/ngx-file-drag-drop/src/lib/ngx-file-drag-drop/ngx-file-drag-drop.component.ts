@@ -38,7 +38,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
     this._disabled = coerceBooleanProperty(val);
   }
 
-  _multiple: boolean = true;
+  _multiple: boolean = false;
   @Input()
   set multiple(value: boolean) {
     this._multiple = coerceBooleanProperty(value);
