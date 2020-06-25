@@ -58,12 +58,13 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   // https://angular.io/api/forms/ControlValueAccessor
   private _onChange = (val: File[]) => { };
-  private _onTouched = () => {  };
+  private _onTouched = () => { };
   private _isDragOver = false;
 
   writeValue(files: File[]): void {
-    if (files.length < 2 || this.multiple) {
-      this._files = files;
+    const fileArray = this.convertToArray(files);
+    if (fileArray.length < 2 || this.multiple) {
+      this._files = fileArray;
       this.emitChanges(this._files);
     }
     else throw Error('Multiple files not allowed')
