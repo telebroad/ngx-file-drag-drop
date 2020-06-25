@@ -1,6 +1,6 @@
 # ngx-file-drag-drop
 
-## Check out the [Demo](https://ngx-file-drag-drop.stackblitz.io)
+#### Check out the [Demo](https://ngx-file-drag-drop.stackblitz.io)
 
 ## Install
 
