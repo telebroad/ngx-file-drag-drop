@@ -9,24 +9,29 @@ input {
 
 :host {
   display: block;
-  border: 2px dashed #ccc;
+  border: 2px dashed;
   border-radius: 20px;
   min-height: 150px;
   margin: 10px auto;
   max-width: 500px;
   padding: 20px;
+  cursor: pointer;
 }
 /* :host:active, */
-:host.drag-over {
+/* :host.drag-over {
   border-color: purple;
-}
+} */
 :host.disabled {
   opacity: 0.5;
+  cursor: unset;
 }
 
 .placeholder {
   /* opacity: 0.9; */
   color: grey;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 mat-chip {

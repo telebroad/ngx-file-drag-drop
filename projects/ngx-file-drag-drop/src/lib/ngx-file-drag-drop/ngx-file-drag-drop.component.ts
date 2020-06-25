@@ -49,6 +49,18 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   @Input() emptyPlaceholder = `Drop file${this.multiple ? 's' : ''} or click to select`;
 
+  private _activeBorderColor = 'purple';
+
+  @Input('activeBorderColor')
+  @HostBinding('style.border-color')
+  set borderColor(color: string) {
+    this._activeBorderColor = color;
+  }
+  get borderColor() {
+    return this.isDragover ? this._activeBorderColor : '#ccc'
+  }
+
+
 
   private _files: File[] = [];
   get
@@ -123,7 +135,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   }
 
 
-  @HostBinding('class.drag-over')
+  // @HostBinding('class.drag-over')
   get isDragover() {
     return this._isDragOver
   }
