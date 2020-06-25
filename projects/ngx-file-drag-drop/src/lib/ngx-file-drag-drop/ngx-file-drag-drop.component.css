@@ -16,6 +16,7 @@ input {
   max-width: 500px;
   padding: 20px;
 }
+/* :host:active, */
 :host.drag-over {
   border-color: purple;
 }

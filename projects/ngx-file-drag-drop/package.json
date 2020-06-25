@@ -8,7 +8,7 @@
     "@angular/material": "^9.0.0"
   },
   "description": "angular material file input component supports file drag and drop, and selection with native file picker",
-  "homepage": "https://github.com/emmbee7806/ngx-file-drag-drop",
+  "homepage": "https://github.com/telebroad/ngx-file-drag-drop",
   "keywords": [
     "angular",
     "material",
@@ -21,10 +21,10 @@
     "ngx-file-drag-drop"
   ],
   "bugs": {
-    "url": "https://github.com/emmbee7806/ngx-file-drag-drop/issues"
+    "url": "https://github.com/telebroad/ngx-file-drag-drop/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/emmbee7806/ngx-file-drag-drop"
+    "url": "https://github.com/telebroad/ngx-file-drag-drop"
   }
 }

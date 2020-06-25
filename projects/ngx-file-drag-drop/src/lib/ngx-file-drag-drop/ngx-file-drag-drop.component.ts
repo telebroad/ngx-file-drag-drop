@@ -58,7 +58,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   // https://angular.io/api/forms/ControlValueAccessor
   private _onChange = (val: File[]) => { };
-  private _onTouched = () => { console.log('blured') };
+  private _onTouched = () => {  };
   private _isDragOver = false;
 
   writeValue(files: File[]): void {

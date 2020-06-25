@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxFileDragDropModule } from 'ngx-file-drag-drop';
+import { NgxFileDragDropModule } from 'projects/ngx-file-drag-drop/src/lib/ngx-file-drag-drop.module';
 
 @NgModule({
   declarations: [
