@@ -1,8 +1,8 @@
-import { ValidatorFn, AbstractControl } from '@angular/forms';
+import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 export class FileValidator {
     static fileExtension(ext: string[]): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } | null => {
+        return (control: AbstractControl): ValidationErrors | null => {
 
             const validExtensions = ext.map(e => e.trim().toLowerCase());
             const fileArray = (control.value as File[]);
@@ -11,45 +11,53 @@ export class FileValidator {
                 fname => {
                     const extension = fname.slice((fname.lastIndexOf(".") - 1 >>> 0) + 2).toLowerCase();
                     return !validExtensions.includes(extension);
-                });
+                }).map(name => ({ name, ext: name.slice((name.lastIndexOf(".") - 1 >>> 0) + 2) }));
+
+                
 
             return !invalidFiles.length
                 ? null
                 : {
                     fileExtension: {
-                        invalidFileNames: invalidFiles
+                        requiredExtension: ext.toString(),
+                        actualExtensions: invalidFiles
                     }
                 };
         };
     }
 
-    static duplicateFileNames(): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } | null => {
+    static uniqueFileNames(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
 
             const fileNameArray = (control.value as File[]).map(file => file.name);
 
-            const duplicatesArray = fileNameArray.reduce((a, b) => {
+            const duplicates = fileNameArray.reduce((a, b) => {
                 a[b] = a[b] ? a[b] + 1 : 1;
                 return a
             }, []).filter(count => count > 1);
 
+            const duplicatesArray: { name: String, count: Number }[] = [];
+            for (const name in duplicates) {
+                duplicatesArray.push({ name, count: duplicates[name] })
+            }
+
             return !duplicatesArray.length
                 ? null
                 : {
-                    duplicates: { ...[duplicatesArray] }
+                    uniqueFileNames: { duplicatedFileNames: duplicatesArray }
                 };
         };
     }
 
-    static fileType(type: string[] | RegExp): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } | null => {
+    static fileType(types: string[] | RegExp): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
 
             let regExp: RegExp;
-            if (Array.isArray(type)) {
-                const joinedTypes = type.join('$|^');
+            if (Array.isArray(types)) {
+                const joinedTypes = types.join('$|^');
                 regExp = new RegExp(`$${joinedTypes}^`, 'i')
             } else {
-                regExp = type;
+                regExp = types;
             }
 
             const fileArray = (control.value as File[]);
@@ -63,15 +71,32 @@ export class FileValidator {
                 ? null
                 : {
                     fileType: {
-                        allowedTypes: type.toString(),
-                        invalidFiles
+                        requiredType: types.toString(),
+                        actualTypes: invalidFiles
+                    }
+                };
+        };
+    }
+
+
+
+    static maxFileCount(count: number): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const fileCount = control?.value ? (control.value as File[]).length : 0;
+            const result = count >= fileCount;
+            return result
+                ? null
+                : {
+                    maxFileCount: {
+                        maxCount: count,
+                        actualCount: fileCount
                     }
                 };
         };
     }
 
     static maxFileSize(bytes: number): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } | null => {
+        return (control: AbstractControl): ValidationErrors | null => {
 
 
             const fileArray = (control.value as File[]);
@@ -83,43 +108,28 @@ export class FileValidator {
                 : {
                     maxFileSize: {
                         maxSize: bytes,
-                        invalidFiles
-                    }
-                };
-        };
-    }
-
-    static maxFiles(count: number): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } | null => {
-            const fileCount = control?.value ? (control.value as File[]).length : 0;
-            const result = count >= fileCount;
-            return result
-                ? null
-                : {
-                    maxFiles: {
-                        maxCount: count,
-                        count: fileCount
+                        actualSizes: invalidFiles
                     }
                 };
         };
     }
 
     static maxTotalSize(bytes: number): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } | null => {
+        return (control: AbstractControl): ValidationErrors | null => {
             const size = control?.value ? (control.value as File[]).map(file => file.size).reduce((acc, i) => acc + i, 0) : 0;
             const result = bytes >= size;
             return result
                 ? null
                 : {
                     maxTotalSize: {
-                        size: size,
-                        maxSize: bytes
+                        maxSize: bytes,
+                        actualSize: size
                     }
                 };
         };
     }
     static required(): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: any } | null => {
+        return (control: AbstractControl): ValidationErrors | null => {
             const count = control?.value?.length
             return count
                 ? null
