@@ -60,3 +60,7 @@ mat-chip {
 .mat-chip.mat-standard-chip::after {
   background: unset;
 }
+
+/* :host.ng-invalid.ng-touched {
+  border-color: red !important;
+} */
