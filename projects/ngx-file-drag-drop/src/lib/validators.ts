@@ -1,5 +1,6 @@
 import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
+// @dynamic
 export class FileValidators {
     static fileExtension(ext: string[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
