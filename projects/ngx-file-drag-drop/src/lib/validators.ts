@@ -1,6 +1,6 @@
 import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
-export class FileValidator {
+export class FileValidators {
     static fileExtension(ext: string[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
 
@@ -13,7 +13,7 @@ export class FileValidator {
                     return !validExtensions.includes(extension);
                 }).map(name => ({ name, ext: name.slice((name.lastIndexOf(".") - 1 >>> 0) + 2) }));
 
-                
+
 
             return !invalidFiles.length
                 ? null
@@ -26,27 +26,25 @@ export class FileValidator {
         };
     }
 
-    static uniqueFileNames(): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors | null => {
+    static uniqueFileNames(control: AbstractControl): ValidationErrors | null {
 
-            const fileNameArray = (control.value as File[]).map(file => file.name);
+        const fileNameArray = (control.value as File[]).map(file => file.name);
 
-            const duplicates = fileNameArray.reduce((a, b) => {
-                a[b] = a[b] ? a[b] + 1 : 1;
-                return a
-            }, []).filter(count => count > 1);
+        const duplicates = fileNameArray.reduce((a, b) => {
+            a[b] = a[b] ? a[b] + 1 : 1;
+            return a
+        }, []).filter(count => count > 1);
 
-            const duplicatesArray: { name: String, count: Number }[] = [];
-            for (const name in duplicates) {
-                duplicatesArray.push({ name, count: duplicates[name] })
-            }
+        const duplicatesArray: { name: String, count: Number }[] = [];
+        for (const name in duplicates) {
+            duplicatesArray.push({ name, count: duplicates[name] })
+        }
 
-            return !duplicatesArray.length
-                ? null
-                : {
-                    uniqueFileNames: { duplicatedFileNames: duplicatesArray }
-                };
-        };
+        return !duplicatesArray.length
+            ? null
+            : {
+                uniqueFileNames: { duplicatedFileNames: duplicatesArray }
+            };
     }
 
     static fileType(types: string[] | RegExp): ValidatorFn {
@@ -128,14 +126,12 @@ export class FileValidator {
                 };
         };
     }
-    static required(): ValidatorFn {
-        return (control: AbstractControl): ValidationErrors | null => {
-            const count = control?.value?.length
-            return count
-                ? null
-                : {
-                    required: true
-                }
-        };
+    static required(control: AbstractControl): ValidationErrors | null {
+        const count = control?.value?.length
+        return count
+            ? null
+            : {
+                required: true
+            }
     };
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { FileValidators } from 'projects/ngx-file-drag-drop/src/public-api'
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { FormControl } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
 
-  fileControl = new FormControl();
+  fileControl = new FormControl([], FileValidators.required);
 
   onValueChange(file: File[]) {
     console.log(file)
