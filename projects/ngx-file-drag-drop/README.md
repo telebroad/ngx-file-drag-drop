@@ -51,14 +51,12 @@ implements: [ControlValueAccessor](https://angular.io/api/forms/ControlValueAcce
 import { FileValidators } from "ngx-file-drag-drop";
 ```
 
-| Validator                           | Description                            |
-| ----------------------------------- | -------------------------------------- |
-| uniqueFileNames                     | Disallow two files with same file name |
-| fileExtension(ext: string[])        | Required file extensions               |
-| fileType(types: string[] \| RegExp) | Required Mime Types                    |
-| maxFileCount(count: number)         | Max number of files                    |
-| maxFileSize(bytes: number)          | Max bytes allowed per file             |
-| maxTotalSize(bytes: number)         | Max total input size                   |
-| required                            | At least one file required             |
-
-
+| Validator                             | Description                            |
+| ------------------------------------- | -------------------------------------- |
+| `uniqueFileNames`                     | Disallow two files with same file name |
+| `fileExtension(ext: string[])`        | Required file extensions               |
+| `fileType(types: string[] \| RegExp)` | Required Mime Types                    |
+| `maxFileCount(count: number)`         | Max number of files                    |
+| `maxFileSize(bytes: number)`          | Max bytes allowed per file             |
+| `maxTotalSize(bytes: number)`         | Max total input size                   |
+| `required`                            | At least one file required             |
