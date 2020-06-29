@@ -13,7 +13,7 @@ npm i ngx-file-drag-drop
 ### MaterialFileInputModule
 
 ```ts
-import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { MaterialFileInputModule } from 'ngx-file-drag-drop';
 
 @NgModule({
   imports: [
@@ -31,16 +31,34 @@ implements: [ControlValueAccessor](https://angular.io/api/forms/ControlValueAcce
 
 **Additionnal properties**
 
-| Name                                                     | Description                                                                                       |
-| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| _@Input()_ multiple: `boolean`                           | Allows multiple file inputs, `false` by default                                                   |
-| _@Input()_ accept: `string`                              | Any value that `accept` file input attribute can get. Note that this does not validate the input. |
-| _@Input()_ disabled: `boolean`                           | Disable the input.                                                                                |
-| _@Input()_ emptyPlaceholder : `string`                   | Placeholder for empty input, default `Drop file or click to select`                               |
-| _@Input()_ activeBorderColor: `string`                   | A css color for when file is dragged into drop area, default `purple`                             |
-| _@Output()_ valueChanged:`EventEmitter<File[]>`          | Event emitted when input value changes                                                            |
-| addFiles():`(files: File[] \| FileList \| File) => void` | Update input                                                                                      |
-| removeFile():`(file:File) => void`                       | Removes the file from the input                                                                   |
-| clear(): `() => void`                                    | Removes all files from the input                                                                  |
-| files: `File[]`                                          | Getter for form value                                                                             |
-| isEmpty: `boolean`                                       | Whether the input is empty (no files) or not                                                      |
+| Name                                                     | Description                                                              |
+| -------------------------------------------------------- | ------------------------------------------------------------------------ |
+| _@Input()_ multiple: `boolean`                           | Allows multiple file inputs, `false` by default                          |
+| _@Input()_ accept: `string`                              | Any value the native `accept` attribute can get. Doesn't validate input. |
+| _@Input()_ disabled: `boolean`                           | Disable the input.                                                       |
+| _@Input()_ emptyPlaceholder : `string`                   | Placeholder for empty input, default `Drop file or click to select`      |
+| _@Input()_ activeBorderColor: `string`                   | A css color for when file is dragged into drop area, default `purple`    |
+| _@Output()_ valueChanged:`EventEmitter<File[]>`          | Event emitted when input value changes                                   |
+| addFiles():`(files: File[] \| FileList \| File) => void` | Update input                                                             |
+| removeFile():`(file:File) => void`                       | Removes the file from the input                                          |
+| clear(): `() => void`                                    | Removes all files from the input                                         |
+| files: `File[]`                                          | Getter for form value                                                    |
+| isEmpty: `boolean`                                       | Whether the input is empty (no files) or not                             |
+
+### Validators
+
+```ts
+import { FileValidators } from "ngx-file-drag-drop";
+```
+
+| Validator                           | Description                            |
+| ----------------------------------- | -------------------------------------- |
+| uniqueFileNames                     | Disallow two files with same file name |
+| fileExtension(ext: string[])        | Required file extensions               |
+| fileType(types: string[] \| RegExp) | Required Mime Types                    |
+| maxFileCount(count: number)         | Max number of files                    |
+| maxFileSize(bytes: number)          | Max bytes allowed per file             |
+| maxTotalSize(bytes: number)         | Max total input size                   |
+| required                            | At least one file required             |
+
+
