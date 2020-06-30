@@ -1,6 +1,6 @@
 {
   "name": "ngx-file-drag-drop",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^9.0.0 || ^10.0.0",
