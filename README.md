@@ -37,7 +37,7 @@ implements: [ControlValueAccessor](https://angular.io/api/forms/ControlValueAcce
 | _@Input()_ accept: `string`                              | Any value the native `accept` attribute can get. Doesn't validate input. |
 | _@Input()_ disabled: `boolean`                           | Disable the input.                                                       |
 | _@Input()_ emptyPlaceholder : `string`                   | Placeholder for empty input, default `Drop file or click to select`      |
-| _@Input()_ displayFileSize : `boolean`                   | If the file size is displayed in input, default `true`                   |
+| _@Input()_ displayFileSize : `boolean`                   | Show file size in chip rather than in tooltip, default `false`           |
 | _@Input()_ activeBorderColor: `string`                   | A css color for when file is dragged into drop area, default `purple`    |
 | _@Output()_ valueChanged:`EventEmitter<File[]>`          | Event emitted when input value changes                                   |
 | addFiles():`(files: File[] \| FileList \| File) => void` | Update input                                                             |
@@ -53,6 +53,7 @@ Usage:
 ```html
 <span>{{ 104857600 | byteFormat }}</span>
 ```
+
 _Output:_ 100 MB
 
 ### Validators
