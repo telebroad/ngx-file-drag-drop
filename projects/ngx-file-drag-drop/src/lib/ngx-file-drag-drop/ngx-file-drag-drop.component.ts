@@ -50,11 +50,16 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
   @Input() emptyPlaceholder = `Drop file${this.multiple ? 's' : ''} or click to select`;
 
-  private _displayFileSize = true;
+  private _displayFileSize = false;
 
   @Input()
-  set displayFileSize(value: boolean) {
+  set
+    displayFileSize(value: boolean) {
     this._displayFileSize = coerceBooleanProperty(value);
+  }
+  get
+    displayFileSize() {
+    return this._displayFileSize;
   }
 
 
