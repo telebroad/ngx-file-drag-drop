@@ -1,7 +1,7 @@
 <mat-chip-list *ngIf="files.length" selectable="false">
     <mat-chip selected *ngFor="let file of files" [disabled]="disabled" color="accent" disableRipple="true"
         [removable]="!disabled" (removed)="removeFile(file)">
-        <span class="filename">{{file.name}}</span>
+        <span class="filename">{{getFileName(file)}}</span>
         <mat-icon *ngIf="!disabled" matChipRemove>cancel</mat-icon>
     </mat-chip>
 </mat-chip-list>

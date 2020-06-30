@@ -1,6 +1,7 @@
 import { Component, forwardRef, HostBinding, HostListener, ViewChild, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { BytePipe } from '../byte.pipe';
 
 @Component({
   selector: 'ngx-file-drag-drop',
@@ -48,6 +49,14 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   }
 
   @Input() emptyPlaceholder = `Drop file${this.multiple ? 's' : ''} or click to select`;
+
+  private _displayFileSize = true;
+
+  @Input()
+  set displayFileSize(value: boolean) {
+    this._displayFileSize = coerceBooleanProperty(value);
+  }
+
 
   private _activeBorderColor = 'purple';
 
@@ -262,5 +271,12 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
       }
     }
     return []
+  }
+
+  getFileName(file: File): string {
+    if (!this._displayFileSize) return file.name;
+
+    const size = new BytePipe().transform(file.size);
+    return `${file.name} (${size})`;
   }
 }
