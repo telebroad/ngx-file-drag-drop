@@ -10,10 +10,10 @@ npm i ngx-file-drag-drop
 
 ## API reference
 
-### MaterialFileInputModule
+### NgxFileDragDropModule
 
 ```ts
-import { MaterialFileInputModule } from 'ngx-file-drag-drop';
+import { NgxFileDragDropModule } from 'ngx-file-drag-drop';
 
 @NgModule({
   imports: [
