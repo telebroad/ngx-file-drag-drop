@@ -25,7 +25,7 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
 
 
   // does no validation, just sets the hidden file input
-  @Input() accept: string;
+  @Input() accept = '*';
 
   private _disabled = false;
   @HostBinding('class.disabled')
