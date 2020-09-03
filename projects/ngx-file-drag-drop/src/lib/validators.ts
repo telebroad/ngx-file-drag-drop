@@ -10,9 +10,9 @@ export class FileValidators {
 
             const invalidFiles = fileArray.map(file => file.name).filter(
                 fname => {
-                    const extension = fname.slice((fname.lastIndexOf(".") - 1 >>> 0) + 2).toLowerCase();
+                    const extension = fname.slice((fname.lastIndexOf('.') - 1 >>> 0) + 2).toLowerCase();
                     return !validExtensions.includes(extension);
-                }).map(name => ({ name, ext: name.slice((name.lastIndexOf(".") - 1 >>> 0) + 2) }));
+                }).map(name => ({ name, ext: name.slice((name.lastIndexOf('.') - 1 >>> 0) + 2) }));
 
 
 
@@ -33,12 +33,14 @@ export class FileValidators {
 
         const duplicates = fileNameArray.reduce((a, b) => {
             a[b] = a[b] ? a[b] + 1 : 1;
-            return a
+            return a;
         }, []).filter(count => count > 1);
 
-        const duplicatesArray: { name: String, count: Number }[] = [];
+        const duplicatesArray: { name: string, count: number }[] = [];
         for (const name in duplicates) {
-            duplicatesArray.push({ name, count: duplicates[name] })
+            if (duplicates.hasOwnProperty(name)) {
+                duplicatesArray.push({ name, count: duplicates[name] });
+            }
         }
 
         return !duplicatesArray.length
@@ -54,7 +56,7 @@ export class FileValidators {
             let regExp: RegExp;
             if (Array.isArray(types)) {
                 const joinedTypes = types.join('$|^');
-                regExp = new RegExp(`$${joinedTypes}^`, 'i')
+                regExp = new RegExp(`$${joinedTypes}^`, 'i');
             } else {
                 regExp = types;
             }
@@ -128,11 +130,11 @@ export class FileValidators {
         };
     }
     static required(control: AbstractControl): ValidationErrors | null {
-        const count = control?.value?.length
+        const count = control?.value?.length;
         return count
             ? null
             : {
                 required: true
-            }
-    };
+            };
+    }
 }
