@@ -11,7 +11,7 @@ import { FileValidators } from 'projects/ngx-file-drag-drop/src/public-api'
 })
 export class AppComponent implements OnInit {
 
-  fileControl = new FormControl([], FileValidators.required);
+  fileControl = new FormControl([], [FileValidators.required,FileValidators.uniqueFileNames]);
 
   onValueChange(file: File[]) {
     console.log(file)

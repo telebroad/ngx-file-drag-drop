@@ -31,17 +31,16 @@ export class FileValidators {
 
         const fileNameArray = (control.value as File[]).map(file => file.name);
 
-        const duplicates = fileNameArray.reduce((a, b) => {
-            a[b] = a[b] ? a[b] + 1 : 1;
-            return a;
-        }, []).filter(count => count > 1);
+        const duplicates = fileNameArray.reduce((acc, curr) => {
+            acc[curr] = acc[curr] ? acc[curr] + 1 : 1;
+            return acc;
+        }, {});
 
-        const duplicatesArray: { name: string, count: number }[] = [];
-        for (const name in duplicates) {
-            if (duplicates.hasOwnProperty(name)) {
-                duplicatesArray.push({ name, count: duplicates[name] });
-            }
-        }
+
+
+        const duplicatesArray: { name: string, count: number }[] = (Object.entries(duplicates) as [string, number][])
+            .filter(arr => arr[1] > 1)
+            .map(arr => ({ name: arr[0], count: arr[1] }));
 
         return !duplicatesArray.length
             ? null
