@@ -18,7 +18,7 @@ import { NgxFileDragDropModule } from 'ngx-file-drag-drop';
 @NgModule({
   imports: [
     // the module for this lib
-    NgxFileDragDropDropModule
+    NgxFileDragDropModule
   ]
 })
 ```
