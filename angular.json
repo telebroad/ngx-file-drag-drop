@@ -24,7 +24,6 @@
           "skipTests": true
         },
         "@schematics/angular:module": {
-          "skipTests": true
         },
         "@schematics/angular:pipe": {
           "skipTests": true
@@ -45,7 +44,6 @@
             "main": "projects/ngx-file-drag-drop-demo/src/main.ts",
             "polyfills": "projects/ngx-file-drag-drop-demo/src/polyfills.ts",
             "tsConfig": "projects/ngx-file-drag-drop-demo/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/ngx-file-drag-drop-demo/src/favicon.ico",
               "projects/ngx-file-drag-drop-demo/src/assets"
@@ -54,7 +52,13 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/ngx-file-drag-drop-demo/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -84,7 +88,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
