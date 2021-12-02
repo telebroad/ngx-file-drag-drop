@@ -136,18 +136,6 @@
             "tsConfig": "projects/ngx-file-drag-drop/tsconfig.spec.json",
             "karmaConfig": "projects/ngx-file-drag-drop/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ngx-file-drag-drop/tsconfig.lib.json",
-              "projects/ngx-file-drag-drop/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
