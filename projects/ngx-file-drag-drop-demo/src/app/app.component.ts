@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FileValidators } from 'projects/ngx-file-drag-drop/src/public-api'
+import { FileValidators } from 'projects/ngx-file-drag-drop/src/public-api';
 
 @Component({
   selector: 'app-root',
