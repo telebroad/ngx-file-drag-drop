@@ -1,12 +1,12 @@
 {
   "name": "ngx-file-drag-drop",
-  "version": "5.1.3",
+  "version": "6.0.0",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">=9.0.0  <14.0.0",
-    "@angular/core": ">=9.0.0  <14.0.0",
-    "@angular/cdk": ">=9.0.0  <14.0.0",
-    "@angular/material": ">=9.0.0  <14.0.0"
+    "@angular/common": "^14.0.0",
+    "@angular/core": "^14.0.0",
+    "@angular/cdk": "^14.0.0",
+    "@angular/material": "^14.0.0"
   },
   "description": "angular material file input component supports file drag and drop, and selection with native file picker",
   "homepage": "https://github.com/telebroad/ngx-file-drag-drop",
