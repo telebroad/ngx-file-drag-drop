@@ -120,8 +120,8 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/ngx-file-drag-drop/tsconfig.lib.json",
-            "project": "projects/ngx-file-drag-drop/ng-package.json",
-           
+            "project": "projects/ngx-file-drag-drop/ng-package.json"
+
           },
           "configurations": {
             "production": {
