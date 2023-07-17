@@ -9,7 +9,7 @@ export class BytePipe implements PipeTransform {
   transform(value: string | number, decimals?: number | string): string {
     value = value.toString();
     if (parseInt(value, 10) >= 0) {
-      value = this.formatBytes(+value, +decimals);
+      value = this.formatBytes(+value, decimals ? +decimals : undefined);
     }
     return value;
   }
