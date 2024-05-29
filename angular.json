@@ -37,12 +37,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ngx-file-drag-drop-demo",
+            "outputPath": {
+              "base": "dist/ngx-file-drag-drop-demo"
+            },
             "index": "projects/ngx-file-drag-drop-demo/src/index.html",
-            "main": "projects/ngx-file-drag-drop-demo/src/main.ts",
-            "polyfills": "projects/ngx-file-drag-drop-demo/src/polyfills.ts",
+            "polyfills": [
+              "projects/ngx-file-drag-drop-demo/src/polyfills.ts"
+            ],
             "tsConfig": "projects/ngx-file-drag-drop-demo/tsconfig.app.json",
             "assets": [
               "projects/ngx-file-drag-drop-demo/src/favicon.ico",
@@ -53,12 +56,11 @@
               "projects/ngx-file-drag-drop-demo/src/styles.css"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "projects/ngx-file-drag-drop-demo/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -73,8 +75,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
