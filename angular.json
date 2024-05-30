@@ -3,7 +3,30 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-file-drag-drop-demo": {
+    "ngx-file-drag-drop": {
+      "projectType": "library",
+      "root": "projects/ngx-file-drag-drop",
+      "sourceRoot": "projects/ngx-file-drag-drop/src",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-file-drag-drop/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-file-drag-drop/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-file-drag-drop/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
+    "demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,124 +46,83 @@
         "@schematics/angular:interceptor": {
           "skipTests": true
         },
-        "@schematics/angular:module": {
-        },
         "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:resolver": {
           "skipTests": true
         },
         "@schematics/angular:service": {
           "skipTests": true
         }
       },
-      "root": "projects/ngx-file-drag-drop-demo",
-      "sourceRoot": "projects/ngx-file-drag-drop-demo/src",
+      "root": "projects/demo",
+      "sourceRoot": "projects/demo/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": {
-              "base": "dist/ngx-file-drag-drop-demo"
-            },
-            "index": "projects/ngx-file-drag-drop-demo/src/index.html",
-            "polyfills": [
-              "projects/ngx-file-drag-drop-demo/src/polyfills.ts"
-            ],
-            "tsConfig": "projects/ngx-file-drag-drop-demo/tsconfig.app.json",
+            "outputPath": "dist/demo",
+            "index": "projects/demo/src/index.html",
+            "browser": "projects/demo/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/demo/tsconfig.app.json",
             "assets": [
-              "projects/ngx-file-drag-drop-demo/src/favicon.ico",
-              "projects/ngx-file-drag-drop-demo/src/assets"
+              {
+                "glob": "**/*",
+                "input": "projects/demo/public"
+              }
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "projects/ngx-file-drag-drop-demo/src/styles.css"
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "projects/demo/src/styles.css"
             ],
-            "scripts": [],
-            "extractLicenses": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true,
-            "browser": "projects/ngx-file-drag-drop-demo/src/main.ts"
+            "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/ngx-file-drag-drop-demo/src/environments/environment.ts",
-                  "with": "projects/ngx-file-drag-drop-demo/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
                 }
-              ]
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "buildTarget": "ngx-file-drag-drop-demo:build"
-          },
           "configurations": {
             "production": {
-              "buildTarget": "ngx-file-drag-drop-demo:build:production"
+              "buildTarget": "demo:build:production"
+            },
+            "development": {
+              "buildTarget": "demo:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "ngx-file-drag-drop-demo:build"
-          }
-        }
-      }
-    },
-    "ngx-file-drag-drop": {
-      "projectType": "library",
-      "root": "projects/ngx-file-drag-drop",
-      "sourceRoot": "projects/ngx-file-drag-drop/src",
-      "prefix": "ngx",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/ngx-file-drag-drop/tsconfig.lib.json",
-            "project": "projects/ngx-file-drag-drop/ng-package.json"
-
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/ngx-file-drag-drop/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ngx-file-drag-drop/src/test.ts",
-            "tsConfig": "projects/ngx-file-drag-drop/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-file-drag-drop/karma.conf.js"
-          }
+          "builder": "@angular-devkit/build-angular:extract-i18n"
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

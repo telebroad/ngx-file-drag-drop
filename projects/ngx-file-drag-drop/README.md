@@ -8,21 +8,6 @@
 npm i ngx-file-drag-drop
 ```
 
-## API reference
-
-### NgxFileDragDropModule
-
-```ts
-import { NgxFileDragDropModule } from 'ngx-file-drag-drop';
-
-@NgModule({
-  imports: [
-    // the module for this lib
-    NgxFileDragDropDropModule
-  ]
-})
-```
-
 ### NgxFileDragDropComponent
 
 selector: `<ngx-file-drag-drop>`
