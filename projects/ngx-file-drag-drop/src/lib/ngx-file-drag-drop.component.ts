@@ -7,16 +7,25 @@ import {
   Input,
   Output,
   ViewChild,
+  forwardRef,
 } from "@angular/core";
 import { BytePipe } from "./byte.pipe";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { coerceBooleanProperty } from "@angular/cdk/coercion";
 import { MatIconModule } from "@angular/material/icon";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
   selector: "ngx-file-drag-drop",
   standalone: true,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => NgxFileDragDropComponent),
+      multi: true,
+    },
+  ],
   imports: [MatChipsModule, MatTooltipModule, MatIconModule, BytePipe],
   template: `
     @if(files.length){
