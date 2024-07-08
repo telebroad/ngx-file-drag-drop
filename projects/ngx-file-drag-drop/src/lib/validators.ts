@@ -58,7 +58,7 @@ export class FileValidators {
       let regExp: RegExp;
       if (Array.isArray(types)) {
         const joinedTypes = types.join("$|^");
-        regExp = new RegExp(`$${joinedTypes}^`, "i");
+        regExp = new RegExp(`^${joinedTypes}$`, "i");
       } else {
         regExp = types;
       }
