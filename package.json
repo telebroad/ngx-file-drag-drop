@@ -1,6 +1,6 @@
 {
   "name": "ngx-file-drag-drop",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,25 +9,25 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^18.0.0",
-    "@angular/cdk": "^18.0.0",
-    "@angular/common": "^18.0.0",
-    "@angular/compiler": "^18.0.0",
-    "@angular/core": "^18.0.0",
-    "@angular/forms": "^18.0.0",
-    "@angular/material": "^18.0.0",
-    "@angular/platform-browser": "^18.0.0",
-    "@angular/platform-browser-dynamic": "^18.0.0",
-    "@angular/router": "^18.0.0",
+    "@angular/animations": "^19.0.5",
+    "@angular/cdk": "^19.0.4",
+    "@angular/common": "^19.0.5",
+    "@angular/compiler": "^19.0.5",
+    "@angular/core": "^19.0.5",
+    "@angular/forms": "^19.0.5",
+    "@angular/material": "^19.0.4",
+    "@angular/platform-browser": "^19.0.5",
+    "@angular/platform-browser-dynamic": "^19.0.5",
+    "@angular/router": "^19.0.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3"
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.0.2",
-    "@angular/cli": "^18.0.2",
-    "@angular/compiler-cli": "^18.0.0",
-    "ng-packagr": "^18.0.0",
-    "typescript": "~5.4.2"
+    "@angular-devkit/build-angular": "^19.0.6",
+    "@angular/cli": "^19.0.6",
+    "@angular/compiler-cli": "^19.0.5",
+    "ng-packagr": "^19.0.1",
+    "typescript": "~5.6.3"
   }
 }
