@@ -1,11 +1,11 @@
 {
   "name": "ngx-file-drag-drop",
-  "version": "11.0.0",
+  "version": "20.0.0",
   "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0",
-    "@angular/cdk": "^19.0.0",
-    "@angular/material": "^19.0.0"
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/cdk": "^20.0.0",
+    "@angular/material": "^20.0.0"
   },
   "description": "angular material file input component supports file drag and drop, and selection with native file picker",
   "homepage": "https://github.com/telebroad/ngx-file-drag-drop",
@@ -28,7 +28,7 @@
     "url": "https://github.com/telebroad/ngx-file-drag-drop"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.8.0"
   },
   "sideEffects": false
 }
